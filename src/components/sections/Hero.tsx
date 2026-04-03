@@ -56,8 +56,8 @@ export default function Hero() {
               variants={fadeInUp}
               className="mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
             >
-              <Button href={APP_URL}>Start Your Diagnostic</Button>
-              <Button variant="secondary" href="#how-it-works">
+              <Button href={APP_URL} className="w-full sm:w-auto">Start Your Diagnostic</Button>
+              <Button variant="secondary" href="#how-it-works" className="w-full sm:w-auto">
                 See How It Works
               </Button>
             </motion.div>

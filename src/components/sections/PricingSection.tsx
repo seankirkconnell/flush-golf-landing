@@ -31,13 +31,13 @@ export default function PricingSection() {
 
           <motion.div
             variants={staggerContainer}
-            className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto"
+            className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto"
           >
             {PRICING_TIERS.map((tier) => (
               <motion.div
                 key={tier.name}
                 variants={scaleIn}
-                className={`relative rounded-2xl p-6 flex flex-col ${
+                className={`relative rounded-2xl p-5 sm:p-6 flex flex-col ${
                   tier.highlighted
                     ? "bg-white shadow-xl shadow-black/20 scale-[1.02] ring-2 ring-green-fresh"
                     : "bg-white/10 backdrop-blur-sm border border-white/10"

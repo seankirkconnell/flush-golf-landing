@@ -76,7 +76,7 @@ export default function FlawShowcase() {
                 <motion.div
                   key={group.phase}
                   variants={fadeInUp}
-                  className="bg-white border border-card-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+                  className="bg-white border border-card-border rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all duration-300"
                 >
                   {/* Phase header */}
                   <div className="flex items-center gap-3 mb-4">
@@ -107,7 +107,7 @@ export default function FlawShowcase() {
                       <motion.span
                         key={flaw}
                         variants={pillItem}
-                        className={`px-3 py-1.5 rounded-full text-xs font-medium border ${colors.pill} ${colors.pillBorder} shadow-sm`}
+                        className={`px-2.5 py-1.5 sm:px-3 rounded-full text-xs font-medium border ${colors.pill} ${colors.pillBorder} shadow-sm`}
                       >
                         {flaw}
                       </motion.span>

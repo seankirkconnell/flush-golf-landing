@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-foreground py-10">
       <Container>
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6">
           <div className="flex items-center gap-2.5">
             <Image
               src="/images/logo.png"

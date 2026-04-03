@@ -46,7 +46,7 @@ export default function HowItWorks() {
 
         <motion.div
           variants={staggerContainer}
-          className="grid md:grid-cols-3 gap-8 lg:gap-12"
+          className="grid md:grid-cols-3 gap-10 md:gap-8 lg:gap-12"
         >
           {steps.map((step) => (
             <motion.div
@@ -55,7 +55,7 @@ export default function HowItWorks() {
               className="flex flex-col items-center text-center"
             >
               {/* Phone */}
-              <div className="relative mb-6 w-36 mx-auto">
+              <div className="relative mb-6 w-28 sm:w-36 mx-auto">
                 <IPhoneFrame src={step.image} alt={step.title} />
               </div>
 

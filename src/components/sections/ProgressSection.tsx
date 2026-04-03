@@ -98,9 +98,9 @@ export default function ProgressSection() {
             {/* Animated stat */}
             <motion.div
               variants={fadeInUp}
-              className="mt-6 mb-8 inline-flex items-baseline gap-2 bg-white rounded-2xl px-6 py-4 shadow-sm border border-card-border"
+              className="mt-6 mb-8 inline-flex items-baseline gap-2 bg-white rounded-2xl px-4 py-3 sm:px-6 sm:py-4 shadow-sm border border-card-border"
             >
-              <span className="font-[family-name:var(--font-heading)] font-bold text-4xl text-forest">
+              <span className="font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-4xl text-forest">
                 <AnimatedCounter target={78} />
               </span>
               <span className="text-muted text-sm">clean swing rate</span>
