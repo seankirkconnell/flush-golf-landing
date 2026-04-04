@@ -54,7 +54,7 @@ export const PRICING_TIERS = [
     description: "Get started with the basics.",
     features: [
       "10 swings / month",
-      "1 Full Diagnostic / month",
+      "1 Full Diagnostic",
       "10 saved swings",
       "100 MB storage",
     ],

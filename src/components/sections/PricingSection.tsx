@@ -31,7 +31,7 @@ export default function PricingSection() {
 
           <motion.div
             variants={staggerContainer}
-            className="grid md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto"
+            className="grid md:grid-cols-3 gap-6 sm:gap-6 max-w-4xl mx-auto"
           >
             {PRICING_TIERS.map((tier) => (
               <motion.div
@@ -49,51 +49,52 @@ export default function PricingSection() {
                   </span>
                 )}
 
-                <h3
-                  className={`font-[family-name:var(--font-heading)] font-bold text-lg ${
-                    tier.highlighted ? "text-foreground" : "text-white"
-                  }`}
-                >
-                  {tier.name}
-                </h3>
-
-                <div className="mt-3 flex items-baseline gap-1">
-                  <span
-                    className={`font-[family-name:var(--font-heading)] font-bold text-4xl ${
+                <div className="flex items-start justify-between gap-2">
+                  <h3
+                    className={`font-[family-name:var(--font-heading)] font-bold text-lg ${
                       tier.highlighted ? "text-foreground" : "text-white"
                     }`}
                   >
-                    {tier.price === 0 ? "Free" : `$${tier.price}`}
-                  </span>
-                  {tier.price > 0 && (
+                    {tier.name}
+                  </h3>
+                  <div className="flex items-baseline gap-0.5 flex-shrink-0">
                     <span
-                      className={`text-sm ${
-                        tier.highlighted ? "text-muted" : "text-white/50"
+                      className={`font-[family-name:var(--font-heading)] font-bold text-2xl ${
+                        tier.highlighted ? "text-foreground" : "text-white"
                       }`}
                     >
-                      /month
+                      {tier.price === 0 ? "Free" : `$${tier.price}`}
                     </span>
-                  )}
+                    {tier.price > 0 && (
+                      <span
+                        className={`text-xs ${
+                          tier.highlighted ? "text-muted" : "text-white/50"
+                        }`}
+                      >
+                        /mo
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <p
-                  className={`mt-2 text-sm ${
+                  className={`mt-1 text-sm ${
                     tier.highlighted ? "text-muted" : "text-white/60"
                   }`}
                 >
                   {tier.description}
                 </p>
 
-                <ul className="mt-5 space-y-2.5 flex-1">
+                <ul className="mt-5 grid grid-cols-2 md:grid-cols-1 gap-x-3 gap-y-2.5 flex-1">
                   {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5">
+                    <li key={feature} className="flex items-start gap-2">
                       <Check
                         className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
                           tier.highlighted ? "text-green-fresh" : "text-sage"
                         }`}
                       />
                       <span
-                        className={`text-sm ${
+                        className={`text-sm leading-snug whitespace-nowrap ${
                           tier.highlighted ? "text-foreground" : "text-white/80"
                         }`}
                       >
