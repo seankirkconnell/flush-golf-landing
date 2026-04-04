@@ -20,7 +20,7 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white/80 backdrop-blur-xl shadow-sm border-b border-card-border/50"
-          : "bg-transparent"
+          : "bg-white/60 backdrop-blur-md border-b border-card-border/30 sm:bg-transparent sm:backdrop-blur-none sm:border-b-0"
       }`}
     >
       <Container className="flex items-center justify-between h-12 sm:h-18">
@@ -30,9 +30,9 @@ export default function Navbar() {
             alt="FLUSH Golf"
             width={32}
             height={32}
-            className="rounded-lg w-7 h-7 sm:w-8 sm:h-8"
+            className="rounded-lg w-8 h-8 sm:w-8 sm:h-8"
           />
-          <span className="font-[family-name:var(--font-heading)] font-bold text-sm sm:text-lg text-foreground">
+          <span className="font-[family-name:var(--font-heading)] font-bold text-xl sm:text-xl text-foreground">
             FLUSH <span className="font-normal text-muted">Golf</span>
           </span>
         </a>

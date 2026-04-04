@@ -13,7 +13,7 @@ const headline = "Find your flaws. Fix your swing.";
 
 export default function Hero() {
   return (
-    <section className="relative pt-16 pb-8 sm:pt-36 sm:pb-24 overflow-hidden">
+    <section className="relative pt-20 pb-8 sm:pt-36 sm:pb-24 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-b from-sage-light/30 via-background to-background pointer-events-none" />
 
@@ -38,7 +38,7 @@ export default function Hero() {
 
             <motion.h1
               variants={fadeInUp}
-              className="sm:mt-6 font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-foreground"
+              className="sm:mt-6 font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-foreground"
             >
               Find your flaws.{" "}
               <span className="text-green-fresh">Fix your swing.</span>
@@ -46,10 +46,11 @@ export default function Hero() {
 
             <motion.p
               variants={fadeInUp}
-              className="mt-3 sm:mt-5 text-base sm:text-xl text-muted max-w-lg mx-auto lg:mx-0 leading-relaxed"
+              className="mt-3 sm:mt-5 text-sm sm:text-xl text-muted max-w-lg mx-auto lg:mx-0 leading-relaxed"
             >
-              FLUSH uses AI to detect 25+ swing flaws in real-time — right from
-              your phone. Get a personalized practice plan and watch your game
+              FLUSH uses AI to detect 25+ swing flaws in real-time
+              <span className="hidden sm:inline"> — right from
+              your phone</span>. Get a personalized practice plan and watch your game
               improve.
             </motion.p>
 
@@ -67,7 +68,7 @@ export default function Hero() {
               variants={fadeInUp}
               className="mt-5 sm:mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
             >
-              <Button href={APP_URL} className="w-full sm:w-auto">Start Your Diagnostic</Button>
+              <Button href={APP_URL} className="self-center lg:self-start w-80 !py-2.5 !text-sm sm:w-auto sm:!px-7 sm:!py-3.5 sm:!text-base">Start Your Diagnostic Now</Button>
               <div className="hidden sm:block">
                 <Button variant="secondary" href="#how-it-works">
                   See How It Works

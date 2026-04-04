@@ -6,6 +6,7 @@ import Container from "@/components/ui/Container";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import IPhoneFrame from "@/components/ui/IPhoneFrame";
 import { fadeInUp, slideInRight, staggerContainer } from "@/lib/animations";
+import { useIsDesktop } from "@/lib/hooks";
 
 const features = [
   {
@@ -26,6 +27,8 @@ const features = [
 ];
 
 export default function TipsSection() {
+  const isDesktop = useIsDesktop();
+
   return (
     <SectionWrapper>
       <Container>
@@ -80,7 +83,7 @@ export default function TipsSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
-            variants={slideInRight}
+            variants={isDesktop ? slideInRight : fadeInUp}
             className="flex justify-center lg:justify-end"
           >
             <div className="w-52 sm:w-60">

@@ -6,6 +6,7 @@ import Container from "@/components/ui/Container";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import IPhoneFrame from "@/components/ui/IPhoneFrame";
 import { fadeInUp, slideInLeft, staggerContainer } from "@/lib/animations";
+import { useIsDesktop } from "@/lib/hooks";
 
 const features = [
   {
@@ -26,6 +27,8 @@ const features = [
 ];
 
 export default function LiveCoachSection() {
+  const isDesktop = useIsDesktop();
+
   return (
     <SectionWrapper className="bg-background-alt">
       <Container>
@@ -35,7 +38,7 @@ export default function LiveCoachSection() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
-            variants={slideInLeft}
+            variants={isDesktop ? slideInLeft : fadeInUp}
             className="flex justify-center lg:justify-start order-2 lg:order-1"
           >
             <div className="w-52 sm:w-60">

@@ -21,7 +21,7 @@ export default function SectionWrapper({
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
       variants={stagger ? staggerContainer : fadeInUp}
-      className={`py-12 sm:py-28 ${className}`}
+      className={`py-12 sm:py-28 overflow-hidden ${className}`}
     >
       {children}
     </motion.section>
