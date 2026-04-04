@@ -29,6 +29,14 @@ body {
   width: 100%;
 }
 
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);

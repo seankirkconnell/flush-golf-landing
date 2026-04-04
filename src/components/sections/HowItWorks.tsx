@@ -34,19 +34,47 @@ export default function HowItWorks() {
   return (
     <SectionWrapper id="how-it-works" stagger>
       <Container>
-        <motion.div variants={fadeInUp} className="text-center mb-14">
-          <h2 className="font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-4xl tracking-tight text-foreground">
+        <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-14">
+          <h2 className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground">
             How FLUSH Works
           </h2>
-          <p className="mt-3 text-lg text-muted max-w-2xl mx-auto">
+          <p className="hidden sm:block mt-3 text-lg text-muted max-w-2xl mx-auto">
             Three steps to a better swing. Your Full Diagnostic takes about 10
             minutes.
           </p>
         </motion.div>
+      </Container>
 
+      {/* Mobile: horizontal scroll carousel */}
+      <div className="flex md:hidden gap-16 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none px-[calc(50%-104px)] scroll-px-[calc(50%-104px)]">
+        {steps.map((step) => (
+          <div
+            key={step.number}
+            className="flex-none snap-center flex flex-col items-center text-center w-52"
+          >
+            <div className="w-52 mb-5">
+              <IPhoneFrame src={step.image} alt={step.title} />
+            </div>
+            <div className="flex items-center gap-3 mb-1">
+              <span className="w-7 h-7 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                {step.number}
+              </span>
+              <h3 className="font-[family-name:var(--font-heading)] font-bold text-xl text-foreground">
+                {step.title}
+              </h3>
+            </div>
+            <p className="mt-2 text-sm text-muted leading-relaxed max-w-[13rem]">
+              {step.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: 3-column grid */}
+      <Container>
         <motion.div
           variants={staggerContainer}
-          className="grid md:grid-cols-3 gap-10 md:gap-8 lg:gap-12"
+          className="hidden md:grid md:grid-cols-3 gap-10 md:gap-8 lg:gap-12"
         >
           {steps.map((step) => (
             <motion.div
@@ -54,12 +82,9 @@ export default function HowItWorks() {
               variants={fadeInUp}
               className="flex flex-col items-center text-center"
             >
-              {/* Phone */}
               <div className="relative mb-6 w-30 sm:w-38 mx-auto">
                 <IPhoneFrame src={step.image} alt={step.title} />
               </div>
-
-              {/* Number + Title */}
               <div className="flex items-center gap-3 mb-1">
                 <span className="w-7 h-7 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
                   {step.number}
@@ -68,8 +93,6 @@ export default function HowItWorks() {
                   {step.title}
                 </h3>
               </div>
-
-              {/* Description */}
               <p className="mt-2 text-muted leading-relaxed max-w-xs">
                 {step.description}
               </p>
