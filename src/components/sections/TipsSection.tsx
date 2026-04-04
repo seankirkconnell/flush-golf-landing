@@ -88,7 +88,8 @@ export default function TipsSection() {
           >
             <div className="w-52 sm:w-60">
               <IPhoneFrame
-                src="/images/screenshots/tips.webp"
+                src="/videos/tips-video.mp4"
+                webmSrc="/videos/tips-video.webm"
                 alt="FLUSH Golf curated coaching tips"
               />
             </div>

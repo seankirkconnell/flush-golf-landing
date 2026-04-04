@@ -58,7 +58,8 @@ export default function Hero() {
             <motion.div variants={fadeInUp} className="mt-5 flex justify-center lg:hidden">
               <div className="w-52">
                 <IPhoneFrame
-                  src="/images/screenshots/diagnostic.webp"
+                  src="/videos/fd-video.mp4"
+                  webmSrc="/videos/fd-video.webm"
                   alt="FLUSH Golf Full Diagnostic showing detected swing flaws"
                 />
               </div>

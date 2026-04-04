@@ -6,10 +6,12 @@ export default function IPhoneFrame({
   src,
   alt,
   className = "",
+  webmSrc,
 }: {
   src: string;
   alt: string;
   className?: string;
+  webmSrc?: string;
 }) {
   return (
     <div
@@ -46,18 +48,31 @@ export default function IPhoneFrame({
             className="absolute left-0 right-0 top-0 bg-white"
             style={{ height: "5%" }}
           />
-          {/* Screenshot */}
+          {/* Screenshot / Video */}
           <div
             className="absolute"
             style={{ top: "5%", bottom: 0, left: 0, right: 0 }}
           >
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              className="object-contain object-top"
-              sizes="(max-width: 768px) 60vw, 280px"
-            />
+            {webmSrc ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover object-top"
+              >
+                <source src={webmSrc} type="video/webm" />
+                <source src={src} type="video/mp4" />
+              </video>
+            ) : (
+              <Image
+                src={src}
+                alt={alt}
+                fill
+                className="object-contain object-top"
+                sizes="(max-width: 768px) 60vw, 280px"
+              />
+            )}
           </div>
           {/* Dynamic Island */}
           <div
