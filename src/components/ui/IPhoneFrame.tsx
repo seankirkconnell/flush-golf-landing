@@ -1,23 +1,24 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 
-export default function IPhoneFrame({
+function PhoneShell({
   src,
   alt,
-  className = "",
   webmSrc,
+  statusBarColor,
+  isModal,
 }: {
   src: string;
   alt: string;
-  className?: string;
   webmSrc?: string;
+  statusBarColor: "white" | "black";
+  isModal?: boolean;
 }) {
   return (
-    <div
-      className={`relative mx-auto ${className}`}
-      style={{ aspectRatio: "9 / 19.5" }}
-    >
+    <div className="relative w-full h-full">
       {/* Volume up */}
       <div
         className="absolute rounded-l-sm bg-slate-700"
@@ -43,9 +44,9 @@ export default function IPhoneFrame({
           className="absolute bg-white"
           style={{ inset: 3, borderRadius: 41, overflow: "hidden" }}
         >
-          {/* Status bar whitespace */}
+          {/* Status bar */}
           <div
-            className="absolute left-0 right-0 top-0 bg-white"
+            className={`absolute left-0 right-0 top-0 ${statusBarColor === "black" ? "bg-black" : "bg-white"}`}
             style={{ height: "5%" }}
           />
           {/* Screenshot / Video */}
@@ -70,7 +71,7 @@ export default function IPhoneFrame({
                 alt={alt}
                 fill
                 className="object-contain object-top"
-                sizes="(max-width: 768px) 60vw, 280px"
+                sizes={isModal ? "90vw" : "(max-width: 768px) 60vw, 280px"}
               />
             )}
           </div>
@@ -99,5 +100,80 @@ export default function IPhoneFrame({
         </div>
       </div>
     </div>
+  );
+}
+
+export default function IPhoneFrame({
+  src,
+  alt,
+  className = "",
+  webmSrc,
+  statusBarColor = "white",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  webmSrc?: string;
+  statusBarColor?: "white" | "black";
+}) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [modalOpen]);
+
+  return (
+    <>
+      <div
+        className={`relative mx-auto cursor-pointer ${className}`}
+        style={{ aspectRatio: "9 / 19.5" }}
+        onClick={() => setModalOpen(true)}
+      >
+        <PhoneShell
+          src={src}
+          alt={alt}
+          webmSrc={webmSrc}
+          statusBarColor={statusBarColor}
+          isModal={false}
+        />
+      </div>
+
+      {mounted && modalOpen &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/97"
+            onClick={() => setModalOpen(false)}
+          >
+            <div
+              className="relative h-[88vh]"
+              style={{ aspectRatio: "9 / 19.5" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <PhoneShell
+                src={src}
+                alt={alt}
+                webmSrc={webmSrc}
+                statusBarColor={statusBarColor}
+                isModal={true}
+              />
+            </div>
+          </div>,
+          document.body
+        )}
+    </>
   );
 }

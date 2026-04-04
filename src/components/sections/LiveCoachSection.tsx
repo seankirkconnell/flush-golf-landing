@@ -46,6 +46,7 @@ export default function LiveCoachSection() {
                 src="/videos/swing-video.mp4"
                 webmSrc="/videos/swing-video.webm"
                 alt="FLUSH Live Coach showing real-time swing analysis"
+                statusBarColor="black"
               />
             </div>
           </motion.div>
