@@ -46,7 +46,7 @@ const phaseColors: Record<string, { bg: string; border: string; icon: string; pi
 
 export default function FlawShowcase() {
   return (
-    <section className="py-20 sm:py-28 bg-background-alt relative overflow-hidden">
+    <section className="py-12 sm:py-28 bg-background-alt relative overflow-hidden">
 
       <Container className="relative">
         <motion.div

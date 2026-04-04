@@ -55,7 +55,7 @@ export default function ProgressSection() {
   return (
     <SectionWrapper className="bg-background-alt">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Phone */}
           <motion.div
             initial="hidden"
@@ -64,7 +64,7 @@ export default function ProgressSection() {
             variants={slideInLeft}
             className="flex justify-center lg:justify-start order-2 lg:order-1"
           >
-            <div className="w-48 sm:w-56">
+            <div className="w-52 sm:w-60">
               <IPhoneFrame
                 src="/images/screenshots/progress.webp"
                 alt="FLUSH Golf progress tracking and swing trends"
@@ -82,14 +82,14 @@ export default function ProgressSection() {
           >
             <motion.h2
               variants={fadeInUp}
-              className="font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-4xl tracking-tight text-foreground"
+              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground"
             >
               Watch your game{" "}
               <span className="text-green-fresh">improve.</span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="mt-3 text-lg text-muted max-w-md leading-relaxed"
+              className="hidden sm:block mt-3 text-lg text-muted max-w-md leading-relaxed"
             >
               Track your clean swing %, flaw trends, and practice sessions over
               time.
@@ -98,7 +98,7 @@ export default function ProgressSection() {
             {/* Animated stat */}
             <motion.div
               variants={fadeInUp}
-              className="mt-6 mb-8 inline-flex items-baseline gap-2 bg-white rounded-2xl px-4 py-3 sm:px-6 sm:py-4 shadow-sm border border-card-border"
+              className="mt-4 sm:mt-6 mb-4 sm:mb-8 inline-flex items-baseline gap-2 bg-white rounded-2xl px-4 py-3 sm:px-6 sm:py-4 shadow-sm border border-card-border"
             >
               <span className="font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-4xl text-forest">
                 <AnimatedCounter target={78} />
@@ -106,21 +106,21 @@ export default function ProgressSection() {
               <span className="text-muted text-sm">clean swing rate</span>
             </motion.div>
 
-            <div className="space-y-5">
+            <div className="space-y-3 sm:space-y-5">
               {features.map((feature) => (
                 <motion.div
                   key={feature.title}
                   variants={fadeInUp}
-                  className="flex gap-4"
+                  className="flex gap-3 sm:gap-4"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-sage-light flex items-center justify-center">
-                    <feature.icon className="w-5 h-5 text-forest" />
+                  <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sage-light flex items-center justify-center">
+                    <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-forest" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">
+                    <h3 className="font-semibold text-foreground text-sm sm:text-base">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-muted mt-0.5 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted mt-0.5 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>

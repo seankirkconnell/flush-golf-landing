@@ -55,7 +55,7 @@ export default function HowItWorks() {
               className="flex flex-col items-center text-center"
             >
               {/* Phone */}
-              <div className="relative mb-6 w-28 sm:w-36 mx-auto">
+              <div className="relative mb-6 w-30 sm:w-38 mx-auto">
                 <IPhoneFrame src={step.image} alt={step.title} />
               </div>
 

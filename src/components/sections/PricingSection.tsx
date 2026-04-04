@@ -9,7 +9,7 @@ import { fadeInUp, staggerContainer, scaleIn } from "@/lib/animations";
 
 export default function PricingSection() {
   return (
-    <section className="py-20 sm:py-28 bg-gradient-to-b from-forest-dark to-forest-deep relative overflow-hidden">
+    <section className="py-12 sm:py-28 bg-gradient-to-b from-forest-dark to-forest-deep relative overflow-hidden">
       {/* Subtle texture overlay */}
       <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_50%_50%,white_1px,transparent_1px)] bg-[length:24px_24px]" />
 

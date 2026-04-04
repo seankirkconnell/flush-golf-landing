@@ -29,7 +29,7 @@ export default function LiveCoachSection() {
   return (
     <SectionWrapper className="bg-background-alt">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Phone */}
           <motion.div
             initial="hidden"
@@ -38,7 +38,7 @@ export default function LiveCoachSection() {
             variants={slideInLeft}
             className="flex justify-center lg:justify-start order-2 lg:order-1"
           >
-            <div className="w-48 sm:w-56">
+            <div className="w-52 sm:w-60">
               <IPhoneFrame
                 src="/images/screenshots/feedback.webp"
                 alt="FLUSH Live Coach showing real-time swing analysis"
@@ -56,34 +56,34 @@ export default function LiveCoachSection() {
           >
             <motion.h2
               variants={fadeInUp}
-              className="font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-4xl tracking-tight text-foreground"
+              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground"
             >
               Real-time feedback.{" "}
               <span className="text-green-fresh">Every swing.</span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="mt-3 text-lg text-muted max-w-md leading-relaxed"
+              className="hidden sm:block mt-3 text-lg text-muted max-w-md leading-relaxed"
             >
               Live Coach watches your swing and calls out flaws before you even
               pick up your tee.
             </motion.p>
 
-            <div className="mt-8 space-y-5">
+            <div className="mt-4 sm:mt-8 space-y-3 sm:space-y-5">
               {features.map((feature) => (
                 <motion.div
                   key={feature.title}
                   variants={fadeInUp}
-                  className="flex gap-4"
+                  className="flex gap-3 sm:gap-4"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-sage-light flex items-center justify-center">
-                    <feature.icon className="w-5 h-5 text-forest" />
+                  <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sage-light flex items-center justify-center">
+                    <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-forest" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">
+                    <h3 className="font-semibold text-foreground text-sm sm:text-base">
                       {feature.title}
                     </h3>
-                    <p className="text-sm text-muted mt-0.5 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-muted mt-0.5 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
