@@ -22,7 +22,7 @@ export default function PricingSection() {
         >
           <motion.div variants={fadeInUp} className="text-center mb-14">
             <h2 className="font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-4xl tracking-tight text-white">
-              Simple, honest pricing.
+              Pricing that makes sense.
             </h2>
             <p className="mt-3 text-lg text-white/60 max-w-lg mx-auto">
               Start free. Upgrade when you're ready to get serious.
