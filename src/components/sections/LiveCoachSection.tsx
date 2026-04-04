@@ -59,7 +59,7 @@ export default function LiveCoachSection() {
           >
             <motion.h2
               variants={fadeInUp}
-              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground"
+              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground whitespace-nowrap"
             >
               Real-time feedback.{" "}
               <span className="text-green-fresh">Every swing.</span>

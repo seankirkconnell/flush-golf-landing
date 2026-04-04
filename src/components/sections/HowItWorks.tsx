@@ -35,7 +35,7 @@ export default function HowItWorks() {
     <SectionWrapper id="how-it-works" stagger>
       <Container>
         <motion.div variants={fadeInUp} className="text-center mb-6 sm:mb-14">
-          <h2 className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground">
+          <h2 className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground whitespace-nowrap">
             How FLUSH Works
           </h2>
           <p className="hidden sm:block mt-3 text-lg text-muted max-w-2xl mx-auto">

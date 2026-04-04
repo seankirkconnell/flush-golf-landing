@@ -84,7 +84,7 @@ export default function ProgressSection() {
           >
             <motion.h2
               variants={fadeInUp}
-              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground"
+              className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground whitespace-nowrap"
             >
               Watch your game{" "}
               <span className="text-green-fresh">improve.</span>
