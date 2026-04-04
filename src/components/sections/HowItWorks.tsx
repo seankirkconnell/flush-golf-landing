@@ -34,7 +34,7 @@ export default function HowItWorks() {
   return (
     <SectionWrapper id="how-it-works" stagger>
       <Container>
-        <motion.div variants={fadeInUp} className="text-center mb-10 sm:mb-14">
+        <motion.div variants={fadeInUp} className="text-center mb-6 sm:mb-14">
           <h2 className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground">
             How FLUSH Works
           </h2>
@@ -46,7 +46,7 @@ export default function HowItWorks() {
       </Container>
 
       {/* Mobile: horizontal scroll carousel */}
-      <div className="flex md:hidden gap-16 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none px-[calc(50%-128px)] scroll-px-[calc(50%-128px)]">
+      <div className="flex md:hidden gap-12 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none px-[calc(50%-128px)] scroll-px-[calc(50%-128px)]">
         {steps.map((step) => (
           <div
             key={step.number}
