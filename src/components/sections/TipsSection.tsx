@@ -32,7 +32,7 @@ export default function TipsSection() {
   return (
     <SectionWrapper>
       <Container>
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-5 sm:gap-12 lg:gap-20 items-center">
           {/* Text */}
           <motion.div
             initial="hidden"

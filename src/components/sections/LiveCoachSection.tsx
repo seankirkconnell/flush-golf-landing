@@ -32,7 +32,7 @@ export default function LiveCoachSection() {
   return (
     <SectionWrapper className="bg-background-alt">
       <Container>
-        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-5 sm:gap-12 lg:gap-20 items-center">
           {/* Phone */}
           <motion.div
             initial="hidden"

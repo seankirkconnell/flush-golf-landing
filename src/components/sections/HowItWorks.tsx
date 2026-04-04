@@ -46,13 +46,13 @@ export default function HowItWorks() {
       </Container>
 
       {/* Mobile: horizontal scroll carousel */}
-      <div className="flex md:hidden gap-16 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none px-[calc(50%-104px)] scroll-px-[calc(50%-104px)]">
+      <div className="flex md:hidden gap-16 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none px-[calc(50%-128px)] scroll-px-[calc(50%-128px)]">
         {steps.map((step) => (
           <div
             key={step.number}
-            className="flex-none snap-center flex flex-col items-center text-center w-52"
+            className="flex-none snap-center flex flex-col items-center text-center w-64"
           >
-            <div className="w-52 mb-5">
+            <div className="w-52 mb-7">
               <IPhoneFrame src={step.image} alt={step.title} />
             </div>
             <div className="flex items-center gap-3 mb-1">
@@ -63,7 +63,7 @@ export default function HowItWorks() {
                 {step.title}
               </h3>
             </div>
-            <p className="mt-2 text-sm text-muted leading-relaxed max-w-[13rem]">
+            <p className="mt-2 text-sm text-muted leading-relaxed">
               {step.description}
             </p>
           </div>
