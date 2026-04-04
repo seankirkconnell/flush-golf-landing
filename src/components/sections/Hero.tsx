@@ -55,7 +55,7 @@ export default function Hero() {
             </motion.p>
 
             {/* Phone — mobile only, after subtitle */}
-            <motion.div variants={fadeInUp} className="mt-6 flex justify-center lg:hidden">
+            <motion.div variants={fadeInUp} className="mt-5 flex justify-center lg:hidden">
               <div className="w-52">
                 <IPhoneFrame
                   src="/images/screenshots/diagnostic.webp"
@@ -67,6 +67,7 @@ export default function Hero() {
             <motion.div
               variants={fadeInUp}
               className="mt-5 sm:mt-8 flex flex-col sm:flex-row gap-3 justify-center lg:justify-start"
+
             >
               <Button href={APP_URL} className="self-center lg:self-start w-80 !py-2.5 !text-sm sm:w-auto sm:!px-7 sm:!py-3.5 sm:!text-base">Start Your Diagnostic Now</Button>
               <div className="hidden sm:block">

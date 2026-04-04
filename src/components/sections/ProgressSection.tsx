@@ -16,7 +16,6 @@ function AnimatedCounter({ target }: { target: number }) {
 
   useEffect(() => {
     if (!isInView) return;
-    let start = 0;
     const duration = 1500;
     const startTime = performance.now();
 
@@ -98,10 +97,9 @@ export default function ProgressSection() {
               time.
             </motion.p>
 
-            {/* Animated stat */}
             <motion.div
               variants={fadeInUp}
-              className="mt-4 sm:mt-6 mb-4 sm:mb-8 inline-flex items-baseline gap-2 bg-white rounded-2xl px-4 py-3 sm:px-6 sm:py-4 shadow-sm border border-card-border"
+              className="hidden sm:inline-flex mt-4 sm:mt-6 mb-4 sm:mb-8 items-baseline gap-2 bg-white rounded-2xl px-4 py-3 sm:px-6 sm:py-4 shadow-sm border border-card-border"
             >
               <span className="font-[family-name:var(--font-heading)] font-bold text-3xl sm:text-4xl text-forest">
                 <AnimatedCounter target={78} />
@@ -109,12 +107,12 @@ export default function ProgressSection() {
               <span className="text-muted text-sm">clean swing rate</span>
             </motion.div>
 
-            <div className="space-y-3 sm:space-y-5">
+            <div className="mt-4 sm:mt-0 space-y-3 sm:space-y-5">
               {features.map((feature) => (
                 <motion.div
                   key={feature.title}
                   variants={fadeInUp}
-                  className="flex gap-3 sm:gap-4"
+                  className={`${feature.title === "Clean swing trend" ? "hidden sm:flex" : "flex"} gap-3 sm:gap-4`}
                 >
                   <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sage-light flex items-center justify-center">
                     <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-forest" />

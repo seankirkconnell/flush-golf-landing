@@ -77,7 +77,7 @@ export default function LiveCoachSection() {
                 <motion.div
                   key={feature.title}
                   variants={fadeInUp}
-                  className="flex gap-3 sm:gap-4"
+                  className={`${feature.title === "Session tracking" ? "hidden sm:flex" : "flex"} gap-3 sm:gap-4`}
                 >
                   <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sage-light flex items-center justify-center">
                     <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-forest" />
