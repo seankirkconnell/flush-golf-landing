@@ -1,8 +1,40 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+
+function AutoPlayVideo({
+  webmSrc,
+  mp4Src,
+  className,
+}: {
+  webmSrc: string;
+  mp4Src: string;
+  className?: string;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    video.play().catch(() => {});
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      autoPlay
+      loop
+      muted
+      playsInline
+      className={className}
+    >
+      <source src={webmSrc} type="video/webm" />
+      <source src={mp4Src} type="video/mp4" />
+    </video>
+  );
+}
 
 function PhoneShell({
   src,
@@ -55,16 +87,11 @@ function PhoneShell({
             style={{ top: "5%", bottom: 0, left: 0, right: 0 }}
           >
             {webmSrc ? (
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
+              <AutoPlayVideo
+                webmSrc={webmSrc}
+                mp4Src={src}
                 className="absolute inset-0 w-full h-full object-cover object-top"
-              >
-                <source src={webmSrc} type="video/webm" />
-                <source src={src} type="video/mp4" />
-              </video>
+              />
             ) : (
               <Image
                 src={src}

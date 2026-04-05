@@ -96,7 +96,8 @@ export default function Hero() {
               className="w-68"
             >
               <IPhoneFrame
-                src="/images/screenshots/diagnostic.webp"
+                src="/videos/fd-video.mp4"
+                webmSrc="/videos/fd-video.webm"
                 alt="FLUSH Golf Full Diagnostic showing detected swing flaws"
               />
             </motion.div>
