@@ -18,8 +18,26 @@ function AutoPlayVideo({
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
+
+    // React hydration can drop the muted attribute — re-apply on the DOM
     video.muted = true;
-    video.play().catch(() => {});
+
+    // Don't call play() eagerly — it conflicts with the browser's native
+    // autoplay on iOS Safari. Instead, observe visibility and only nudge
+    // playback if the video is visible but stuck paused.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && video.paused) {
+            video.play().catch(() => {});
+          }
+        });
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -31,8 +49,8 @@ function AutoPlayVideo({
       playsInline
       className={className}
     >
-      <source src={webmSrc} type="video/webm" />
       <source src={mp4Src} type="video/mp4" />
+      <source src={webmSrc} type="video/webm" />
     </video>
   );
 }
