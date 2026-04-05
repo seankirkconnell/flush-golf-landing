@@ -23,28 +23,28 @@ function AutoPlayVideo({
     video.muted = true;
 
     let isVisible = false;
-    let isReady = video.readyState >= 3; // HAVE_FUTURE_DATA
 
     const tryPlay = () => {
-      if (isVisible && isReady && video.paused) {
+      if (isVisible && video.readyState >= 3 && video.paused) {
         video.play().catch(() => {});
       }
     };
 
     const onCanPlay = () => {
-      isReady = true;
       tryPlay();
     };
 
-    if (!isReady) {
-      video.addEventListener("canplay", onCanPlay);
-    }
+    video.addEventListener("canplay", onCanPlay);
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           isVisible = entry.isIntersecting;
           if (isVisible) {
+            // iOS Safari won't preload video data — kick off loading explicitly
+            if (video.readyState === 0) {
+              video.load();
+            }
             tryPlay();
           } else if (!video.paused) {
             video.pause();
@@ -69,6 +69,7 @@ function AutoPlayVideo({
       loop
       muted
       playsInline
+      preload="auto"
       className={className}
     >
       <source src={mp4Src} type="video/mp4" />
