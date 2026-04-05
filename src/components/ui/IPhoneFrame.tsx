@@ -18,6 +18,7 @@ function AutoPlayVideo({
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
+    video.muted = true;
     video.play().catch(() => {});
   }, []);
 
