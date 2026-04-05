@@ -1,8 +1,81 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+
+function AutoPlayVideo({
+  mp4Src,
+  webmSrc,
+  className,
+}: {
+  mp4Src: string;
+  webmSrc: string;
+  className?: string;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+
+    // Fix React 19 hydration potentially dropping the muted attribute
+    video.muted = true;
+
+    let isVisible = false;
+    let isReady = video.readyState >= 3; // HAVE_FUTURE_DATA
+
+    const tryPlay = () => {
+      if (isVisible && isReady && video.paused) {
+        video.play().catch(() => {});
+      }
+    };
+
+    const onCanPlay = () => {
+      isReady = true;
+      tryPlay();
+    };
+
+    if (!isReady) {
+      video.addEventListener("canplay", onCanPlay);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          isVisible = entry.isIntersecting;
+          if (isVisible) {
+            tryPlay();
+          } else if (!video.paused) {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(video);
+
+    return () => {
+      observer.disconnect();
+      video.removeEventListener("canplay", onCanPlay);
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      autoPlay
+      loop
+      muted
+      playsInline
+      className={className}
+    >
+      <source src={mp4Src} type="video/mp4" />
+      <source src={webmSrc} type="video/webm" />
+    </video>
+  );
+}
 
 function PhoneShell({
   src,
@@ -55,16 +128,11 @@ function PhoneShell({
             style={{ top: "5%", bottom: 0, left: 0, right: 0 }}
           >
             {webmSrc ? (
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
+              <AutoPlayVideo
+                mp4Src={src}
+                webmSrc={webmSrc}
                 className="absolute inset-0 w-full h-full object-cover object-top"
-              >
-                <source src={src} type="video/mp4" />
-                <source src={webmSrc} type="video/webm" />
-              </video>
+              />
             ) : (
               <Image
                 src={src}
