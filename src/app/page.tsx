@@ -1,9 +1,8 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
+import LiveCoachSection from "@/components/sections/LiveCoachSection";
 import HowItWorks from "@/components/sections/HowItWorks";
 import FlawShowcase from "@/components/sections/FlawShowcase";
-import LiveCoachSection from "@/components/sections/LiveCoachSection";
-import TipsSection from "@/components/sections/TipsSection";
 import ProgressSection from "@/components/sections/ProgressSection";
 import PricingSection from "@/components/sections/PricingSection";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -16,10 +15,9 @@ export default function Home() {
       <main>
         <Hero />
         <LiveCoachSection />
-        <TipsSection />
-        <ProgressSection />
         <HowItWorks />
         <FlawShowcase />
+        <ProgressSection />
         <PricingSection />
         <FinalCTA />
       </main>
