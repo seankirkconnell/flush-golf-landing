@@ -10,14 +10,17 @@ function AutoPlayVideo({
   className,
   playing,
   onEnded,
+  endAt,
 }: {
   mp4Src: string;
   webmSrc: string;
   className?: string;
   playing?: boolean;
   onEnded?: () => void;
+  endAt?: number;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const endedFiredRef = useRef(false);
   const manualControl = playing !== undefined;
 
   useEffect(() => {
@@ -32,6 +35,8 @@ function AutoPlayVideo({
         if (video.readyState === 0) {
           video.load();
         }
+        // Reset the early-end guard each time playback begins
+        endedFiredRef.current = false;
         video.play().catch(() => {});
       } else {
         video.pause();
@@ -83,10 +88,30 @@ function AutoPlayVideo({
     if (!onEnded) return;
     const video = ref.current;
     if (!video) return;
-    const handler = () => onEnded();
-    video.addEventListener("ended", handler);
-    return () => video.removeEventListener("ended", handler);
-  }, [onEnded]);
+
+    const fire = () => {
+      if (endedFiredRef.current) return;
+      endedFiredRef.current = true;
+      onEnded();
+    };
+
+    const onNativeEnded = () => fire();
+    const onTimeUpdate = () => {
+      if (endAt !== undefined && video.currentTime >= endAt) {
+        video.pause();
+        fire();
+      }
+    };
+
+    video.addEventListener("ended", onNativeEnded);
+    if (endAt !== undefined) {
+      video.addEventListener("timeupdate", onTimeUpdate);
+    }
+    return () => {
+      video.removeEventListener("ended", onNativeEnded);
+      video.removeEventListener("timeupdate", onTimeUpdate);
+    };
+  }, [onEnded, endAt]);
 
   return (
     <video
@@ -112,6 +137,7 @@ function PhoneShell({
   isModal,
   playing,
   onEnded,
+  endAt,
 }: {
   src: string;
   alt: string;
@@ -120,6 +146,7 @@ function PhoneShell({
   isModal?: boolean;
   playing?: boolean;
   onEnded?: () => void;
+  endAt?: number;
 }) {
   return (
     <div className="relative w-full h-full">
@@ -164,6 +191,7 @@ function PhoneShell({
                 webmSrc={webmSrc}
                 playing={playing}
                 onEnded={onEnded}
+                endAt={endAt}
                 className="absolute inset-0 w-full h-full object-cover object-top"
               />
             ) : (
@@ -212,6 +240,7 @@ export default function IPhoneFrame({
   statusBarColor = "white",
   playing,
   onEnded,
+  endAt,
 }: {
   src: string;
   alt: string;
@@ -220,6 +249,7 @@ export default function IPhoneFrame({
   statusBarColor?: "white" | "black";
   playing?: boolean;
   onEnded?: () => void;
+  endAt?: number;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -256,6 +286,7 @@ export default function IPhoneFrame({
           isModal={false}
           playing={playing}
           onEnded={onEnded}
+          endAt={endAt}
         />
       </div>
 
