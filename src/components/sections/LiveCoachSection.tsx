@@ -43,8 +43,8 @@ export default function LiveCoachSection() {
           >
             <div className="w-52 sm:w-60">
               <IPhoneFrame
-                src="/videos/swing-video.mp4"
-                webmSrc="/videos/swing-video.webm"
+                src="/videos/swing-video-2.mp4"
+                webmSrc="/videos/swing-video-2.webm"
                 alt="FLUSH Live Coach showing real-time swing analysis"
                 statusBarColor="black"
               />
