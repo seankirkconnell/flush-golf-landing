@@ -180,8 +180,6 @@ export default function HowItWorks() {
                     statusBarColor={step.statusBarColor}
                     playing={isActive}
                     onEnded={() => handleEnded(i)}
-                    endAt={step.endAt}
-                    startAt={step.startAt}
                     playCount={step.playCount}
                     cornerRadius={34}
                     onOpen={() => openModal(i)}
