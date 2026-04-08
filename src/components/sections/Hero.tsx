@@ -41,6 +41,7 @@ export default function Hero() {
               className="sm:mt-6 font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-foreground"
             >
               Find your flaws.{" "}
+              <br className="hidden sm:block" />
               <span className="text-green-fresh">Fix your swing.</span>
             </motion.h1>
 
@@ -48,10 +49,7 @@ export default function Hero() {
               variants={fadeInUp}
               className="mt-3 sm:mt-5 text-sm sm:text-xl text-muted max-w-lg mx-auto lg:mx-0 leading-relaxed"
             >
-              FLUSH uses AI to detect 25+ swing flaws in real-time
-              <span className="hidden sm:inline"> — right from
-              your phone</span>. Get a personalized practice plan and watch your game
-              improve.
+              Get an AI golf lesson in minutes. FLUSH finds your swing flaws, teaches you the fix, and gives real-time feedback on every swing.
             </motion.p>
 
             {/* Phone — mobile only, after subtitle */}
