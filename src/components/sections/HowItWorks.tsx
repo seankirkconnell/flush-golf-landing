@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import Container from "@/components/ui/Container";
 import SectionWrapper from "@/components/ui/SectionWrapper";
@@ -12,9 +13,9 @@ const steps = [
     title: "Detect",
     description:
       "Get an AI golf lesson. We analyze your swing and diagnose the exact flaws holding your game back.",
-    image: "/videos/swing-video.mp4",
-    webmSrc: "/videos/swing-video.webm",
-    statusBarColor: "black" as const,
+    image: "/videos/fd-video.mp4",
+    webmSrc: "/videos/fd-video.webm",
+    statusBarColor: "white" as const,
   },
   {
     number: 2,
@@ -37,6 +38,35 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  // Desktop-only: sequential video playback. -1 = none playing, 0-2 = that step's video is playing, steps.length = done.
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const startedRef = useRef(false);
+  const desktopGridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = desktopGridRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !startedRef.current) {
+            startedRef.current = true;
+            setActiveIndex(0);
+          }
+        }
+      },
+      { threshold: 0.4 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const handleEnded = (index: number) => {
+    setActiveIndex(index + 1 < steps.length ? index + 1 : steps.length);
+  };
+
   return (
     <SectionWrapper id="how-it-works" stagger>
       <Container>
@@ -84,36 +114,54 @@ export default function HowItWorks() {
       {/* Desktop: 3-column grid */}
       <Container>
         <motion.div
+          ref={desktopGridRef}
           variants={staggerContainer}
           className="hidden md:grid md:grid-cols-3 gap-10 md:gap-8 lg:gap-12"
         >
-          {steps.map((step) => (
-            <motion.div
-              key={step.number}
-              variants={fadeInUp}
-              className="flex flex-col items-center text-center"
-            >
-              <div className="relative mb-6 w-30 sm:w-38 mx-auto">
-                <IPhoneFrame
-                  src={step.image}
-                  webmSrc={step.webmSrc}
-                  alt={step.title}
-                  statusBarColor={step.statusBarColor}
-                />
-              </div>
-              <div className="flex items-center gap-3 mb-1">
-                <span className="w-7 h-7 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
-                  {step.number}
-                </span>
-                <h3 className="font-[family-name:var(--font-heading)] font-bold text-xl text-foreground">
-                  {step.title}
-                </h3>
-              </div>
-              <p className="mt-2 text-muted leading-relaxed max-w-xs">
-                {step.description}
-              </p>
-            </motion.div>
-          ))}
+          {steps.map((step, i) => {
+            const isActive = activeIndex === i;
+            return (
+              <motion.div
+                key={step.number}
+                variants={fadeInUp}
+                className="flex flex-col items-center text-center"
+              >
+                <div
+                  className={`relative mb-6 w-30 sm:w-38 mx-auto transition-transform duration-500 ease-out ${
+                    isActive ? "scale-105" : ""
+                  }`}
+                >
+                  <IPhoneFrame
+                    src={step.image}
+                    webmSrc={step.webmSrc}
+                    alt={step.title}
+                    statusBarColor={step.statusBarColor}
+                    playing={isActive}
+                    onEnded={() => handleEnded(i)}
+                  />
+                </div>
+                <div className="flex items-center gap-3 mb-1">
+                  <span
+                    className={`w-7 h-7 rounded-full bg-forest text-white text-xs font-bold flex items-center justify-center flex-shrink-0 transition-all duration-500 ${
+                      isActive ? "scale-125 shadow-lg shadow-forest/50" : ""
+                    }`}
+                  >
+                    {step.number}
+                  </span>
+                  <h3
+                    className={`font-[family-name:var(--font-heading)] font-bold text-xl transition-colors duration-500 ${
+                      isActive ? "text-forest" : "text-foreground"
+                    }`}
+                  >
+                    {step.title}
+                  </h3>
+                </div>
+                <p className="mt-2 text-muted leading-relaxed max-w-xs">
+                  {step.description}
+                </p>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </Container>
     </SectionWrapper>

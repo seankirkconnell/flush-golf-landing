@@ -8,12 +8,17 @@ function AutoPlayVideo({
   mp4Src,
   webmSrc,
   className,
+  playing,
+  onEnded,
 }: {
   mp4Src: string;
   webmSrc: string;
   className?: string;
+  playing?: boolean;
+  onEnded?: () => void;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
+  const manualControl = playing !== undefined;
 
   useEffect(() => {
     const video = ref.current;
@@ -21,6 +26,18 @@ function AutoPlayVideo({
 
     // Fix React 19 hydration potentially dropping the muted attribute
     video.muted = true;
+
+    if (manualControl) {
+      if (playing) {
+        if (video.readyState === 0) {
+          video.load();
+        }
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+      return;
+    }
 
     let isVisible = false;
 
@@ -60,13 +77,22 @@ function AutoPlayVideo({
       observer.disconnect();
       video.removeEventListener("canplay", onCanPlay);
     };
-  }, []);
+  }, [manualControl, playing]);
+
+  useEffect(() => {
+    if (!onEnded) return;
+    const video = ref.current;
+    if (!video) return;
+    const handler = () => onEnded();
+    video.addEventListener("ended", handler);
+    return () => video.removeEventListener("ended", handler);
+  }, [onEnded]);
 
   return (
     <video
       ref={ref}
-      autoPlay
-      loop
+      autoPlay={!manualControl}
+      loop={!manualControl}
       muted
       playsInline
       preload="auto"
@@ -84,12 +110,16 @@ function PhoneShell({
   webmSrc,
   statusBarColor,
   isModal,
+  playing,
+  onEnded,
 }: {
   src: string;
   alt: string;
   webmSrc?: string;
   statusBarColor: "white" | "black";
   isModal?: boolean;
+  playing?: boolean;
+  onEnded?: () => void;
 }) {
   return (
     <div className="relative w-full h-full">
@@ -132,6 +162,8 @@ function PhoneShell({
               <AutoPlayVideo
                 mp4Src={src}
                 webmSrc={webmSrc}
+                playing={playing}
+                onEnded={onEnded}
                 className="absolute inset-0 w-full h-full object-cover object-top"
               />
             ) : (
@@ -178,12 +210,16 @@ export default function IPhoneFrame({
   className = "",
   webmSrc,
   statusBarColor = "white",
+  playing,
+  onEnded,
 }: {
   src: string;
   alt: string;
   className?: string;
   webmSrc?: string;
   statusBarColor?: "white" | "black";
+  playing?: boolean;
+  onEnded?: () => void;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -218,6 +254,8 @@ export default function IPhoneFrame({
           webmSrc={webmSrc}
           statusBarColor={statusBarColor}
           isModal={false}
+          playing={playing}
+          onEnded={onEnded}
         />
       </div>
 
