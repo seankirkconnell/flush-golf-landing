@@ -11,6 +11,8 @@ function AutoPlayVideo({
   playing,
   onEnded,
   endAt,
+  startAt,
+  playCount = 1,
 }: {
   mp4Src: string;
   webmSrc: string;
@@ -18,10 +20,31 @@ function AutoPlayVideo({
   playing?: boolean;
   onEnded?: () => void;
   endAt?: number;
+  startAt?: number;
+  playCount?: number;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
   const endedFiredRef = useRef(false);
+  const playsRemainingRef = useRef(playCount);
   const manualControl = playing !== undefined;
+
+  const seekToStart = (video: HTMLVideoElement) => {
+    if (startAt === undefined) return;
+    const apply = () => {
+      try {
+        video.currentTime = startAt;
+      } catch {}
+    };
+    if (video.readyState >= 1) {
+      apply();
+    } else {
+      const onMeta = () => {
+        apply();
+        video.removeEventListener("loadedmetadata", onMeta);
+      };
+      video.addEventListener("loadedmetadata", onMeta);
+    }
+  };
 
   useEffect(() => {
     const video = ref.current;
@@ -35,8 +58,10 @@ function AutoPlayVideo({
         if (video.readyState === 0) {
           video.load();
         }
-        // Reset the early-end guard each time playback begins
+        // Reset the early-end guard and remaining loops each time playback begins
         endedFiredRef.current = false;
+        playsRemainingRef.current = playCount;
+        seekToStart(video);
         video.play().catch(() => {});
       } else {
         video.pause();
@@ -91,6 +116,15 @@ function AutoPlayVideo({
 
     const fire = () => {
       if (endedFiredRef.current) return;
+      playsRemainingRef.current -= 1;
+      if (playsRemainingRef.current > 0) {
+        // Replay from startAt (or 0) instead of advancing
+        try {
+          video.currentTime = startAt ?? 0;
+        } catch {}
+        video.play().catch(() => {});
+        return;
+      }
       endedFiredRef.current = true;
       onEnded();
     };
@@ -111,7 +145,7 @@ function AutoPlayVideo({
       video.removeEventListener("ended", onNativeEnded);
       video.removeEventListener("timeupdate", onTimeUpdate);
     };
-  }, [onEnded, endAt]);
+  }, [onEnded, endAt, startAt]);
 
   return (
     <video
@@ -138,6 +172,8 @@ function PhoneShell({
   playing,
   onEnded,
   endAt,
+  startAt,
+  playCount,
 }: {
   src: string;
   alt: string;
@@ -147,6 +183,8 @@ function PhoneShell({
   playing?: boolean;
   onEnded?: () => void;
   endAt?: number;
+  startAt?: number;
+  playCount?: number;
 }) {
   return (
     <div className="relative w-full h-full">
@@ -192,6 +230,8 @@ function PhoneShell({
                 playing={playing}
                 onEnded={onEnded}
                 endAt={endAt}
+                startAt={startAt}
+                playCount={playCount}
                 className="absolute inset-0 w-full h-full object-cover object-top"
               />
             ) : (
@@ -241,6 +281,8 @@ export default function IPhoneFrame({
   playing,
   onEnded,
   endAt,
+  startAt,
+  playCount,
 }: {
   src: string;
   alt: string;
@@ -250,6 +292,8 @@ export default function IPhoneFrame({
   playing?: boolean;
   onEnded?: () => void;
   endAt?: number;
+  startAt?: number;
+  playCount?: number;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -287,6 +331,8 @@ export default function IPhoneFrame({
           playing={playing}
           onEnded={onEnded}
           endAt={endAt}
+          startAt={startAt}
+          playCount={playCount}
         />
       </div>
 

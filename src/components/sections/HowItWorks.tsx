@@ -16,6 +16,7 @@ const steps = [
     image: "/videos/fd-video.mp4",
     webmSrc: "/videos/fd-video.webm",
     statusBarColor: "white" as const,
+    playCount: 2,
   },
   {
     number: 2,
@@ -25,7 +26,8 @@ const steps = [
     image: "/videos/tips-video.mp4",
     webmSrc: "/videos/tips-video.webm",
     statusBarColor: "white" as const,
-    endAt: 8,
+    startAt: 1,
+    endAt: 5,
   },
   {
     number: 3,
@@ -140,6 +142,8 @@ export default function HowItWorks() {
                     playing={isActive}
                     onEnded={() => handleEnded(i)}
                     endAt={step.endAt}
+                    startAt={step.startAt}
+                    playCount={step.playCount}
                   />
                 </div>
                 <div className="flex items-center gap-3 mb-1">
