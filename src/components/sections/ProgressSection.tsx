@@ -55,7 +55,7 @@ export default function ProgressSection() {
   const isDesktop = useIsDesktop();
 
   return (
-    <SectionWrapper className="bg-background-alt">
+    <SectionWrapper className="bg-background">
       <Container>
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
           {/* Phone */}
