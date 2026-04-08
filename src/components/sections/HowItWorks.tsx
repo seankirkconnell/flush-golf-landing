@@ -73,13 +73,12 @@ export default function HowItWorks() {
   return (
     <SectionWrapper id="how-it-works" stagger>
       <Container>
-        <motion.div variants={fadeInUp} className="text-center mb-6 sm:mb-14">
+        <motion.div variants={fadeInUp} className="text-center mb-6 sm:mb-8">
           <h2 className="font-[family-name:var(--font-heading)] font-bold text-2xl sm:text-4xl tracking-tight text-foreground whitespace-nowrap">
             How FLUSH Works
           </h2>
           <p className="hidden sm:block mt-3 text-lg text-muted max-w-2xl mx-auto">
-            Three steps to a better swing. Your Full Diagnostic takes about 10
-            minutes.
+            Pinpoint your flaws, learn the fix, and get instant feedback on every swing.
           </p>
         </motion.div>
       </Container>
@@ -130,7 +129,7 @@ export default function HowItWorks() {
                 className="flex flex-col items-center text-center"
               >
                 <div
-                  className={`relative mb-6 w-30 sm:w-38 mx-auto transition-transform duration-500 ease-out ${
+                  className={`relative mb-6 w-40 sm:w-48 lg:w-52 mx-auto transition-transform duration-500 ease-out ${
                     isActive ? "scale-105" : ""
                   }`}
                 >
@@ -144,6 +143,7 @@ export default function HowItWorks() {
                     endAt={step.endAt}
                     startAt={step.startAt}
                     playCount={step.playCount}
+                    cornerRadius={34}
                   />
                 </div>
                 <div className="flex items-center gap-3 mb-1">
@@ -162,7 +162,7 @@ export default function HowItWorks() {
                     {step.title}
                   </h3>
                 </div>
-                <p className="mt-2 text-muted leading-relaxed max-w-xs">
+                <p className="mt-2 text-sm text-muted leading-relaxed max-w-xs">
                   {step.description}
                 </p>
               </motion.div>

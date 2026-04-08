@@ -174,6 +174,7 @@ function PhoneShell({
   endAt,
   startAt,
   playCount,
+  cornerRadius = 44,
 }: {
   src: string;
   alt: string;
@@ -185,6 +186,7 @@ function PhoneShell({
   endAt?: number;
   startAt?: number;
   playCount?: number;
+  cornerRadius?: number;
 }) {
   return (
     <div className="relative w-full h-full">
@@ -206,12 +208,12 @@ function PhoneShell({
       {/* Shell */}
       <div
         className="absolute inset-0 bg-slate-900 shadow-2xl"
-        style={{ borderRadius: 44, border: "3px solid #1e293b" }}
+        style={{ borderRadius: cornerRadius, border: "3px solid #1e293b" }}
       >
         {/* Screen */}
         <div
           className="absolute bg-white"
-          style={{ inset: 3, borderRadius: 41, overflow: "hidden" }}
+          style={{ inset: 3, borderRadius: Math.max(cornerRadius - 3, 0), overflow: "hidden" }}
         >
           {/* Status bar */}
           <div
@@ -283,6 +285,7 @@ export default function IPhoneFrame({
   endAt,
   startAt,
   playCount,
+  cornerRadius,
 }: {
   src: string;
   alt: string;
@@ -294,6 +297,7 @@ export default function IPhoneFrame({
   endAt?: number;
   startAt?: number;
   playCount?: number;
+  cornerRadius?: number;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -333,6 +337,7 @@ export default function IPhoneFrame({
           endAt={endAt}
           startAt={startAt}
           playCount={playCount}
+          cornerRadius={cornerRadius}
         />
       </div>
 
