@@ -49,7 +49,7 @@ export default function Hero() {
               variants={fadeInUp}
               className="mt-3 sm:mt-5 text-sm sm:text-xl text-muted max-w-lg mx-auto lg:mx-0 leading-relaxed"
             >
-              Get an AI golf lesson in minutes. FLUSH finds your swing flaws, teaches you the fix, and gives real-time feedback on every swing.
+              <span className="hidden sm:inline">Get an AI golf lesson in minutes. </span>FLUSH finds your swing flaws, teaches you the fix, and gives real-time feedback on every swing.
             </motion.p>
 
             {/* Phone — mobile only, after subtitle */}
