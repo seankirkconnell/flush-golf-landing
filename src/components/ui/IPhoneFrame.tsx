@@ -163,7 +163,7 @@ function AutoPlayVideo({
   );
 }
 
-function PhoneShell({
+export function PhoneShell({
   src,
   alt,
   webmSrc,
@@ -286,6 +286,7 @@ export default function IPhoneFrame({
   startAt,
   playCount,
   cornerRadius,
+  onOpen,
 }: {
   src: string;
   alt: string;
@@ -298,16 +299,18 @@ export default function IPhoneFrame({
   startAt?: number;
   playCount?: number;
   cornerRadius?: number;
+  onOpen?: () => void;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const useCustomOpen = !!onOpen;
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!modalOpen) return;
+    if (!modalOpen || useCustomOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setModalOpen(false);
     };
@@ -317,14 +320,14 @@ export default function IPhoneFrame({
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [modalOpen]);
+  }, [modalOpen, useCustomOpen]);
 
   return (
     <>
       <div
         className={`relative mx-auto cursor-pointer ${className}`}
         style={{ aspectRatio: "9 / 19.5" }}
-        onClick={() => setModalOpen(true)}
+        onClick={() => (onOpen ? onOpen() : setModalOpen(true))}
       >
         <PhoneShell
           src={src}
@@ -341,7 +344,7 @@ export default function IPhoneFrame({
         />
       </div>
 
-      {mounted && modalOpen &&
+      {mounted && modalOpen && !useCustomOpen &&
         createPortal(
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/97"

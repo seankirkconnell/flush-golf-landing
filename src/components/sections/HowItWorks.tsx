@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { createPortal } from "react-dom";
+import { AnimatePresence, motion } from "motion/react";
 import Container from "@/components/ui/Container";
 import SectionWrapper from "@/components/ui/SectionWrapper";
-import IPhoneFrame from "@/components/ui/IPhoneFrame";
+import IPhoneFrame, { PhoneShell } from "@/components/ui/IPhoneFrame";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 const steps = [
@@ -26,8 +27,6 @@ const steps = [
     image: "/videos/tips-video.mp4",
     webmSrc: "/videos/tips-video.webm",
     statusBarColor: "white" as const,
-    startAt: 1,
-    endAt: 5,
   },
   {
     number: 3,
@@ -45,6 +44,46 @@ export default function HowItWorks() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const startedRef = useRef(false);
   const desktopGridRef = useRef<HTMLDivElement>(null);
+
+  // Fullscreen swipeable modal state
+  const [modalIndex, setModalIndex] = useState<number | null>(null);
+  const [modalDirection, setModalDirection] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (modalIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalIndex(null);
+      else if (e.key === "ArrowLeft" && modalIndex > 0) {
+        setModalDirection(-1);
+        setModalIndex(modalIndex - 1);
+      } else if (e.key === "ArrowRight" && modalIndex < steps.length - 1) {
+        setModalDirection(1);
+        setModalIndex(modalIndex + 1);
+      }
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [modalIndex]);
+
+  const openModal = (i: number) => {
+    setModalDirection(0);
+    setModalIndex(i);
+  };
+
+  const goTo = (next: number) => {
+    if (modalIndex === null) return;
+    setModalDirection(next > modalIndex ? 1 : -1);
+    setModalIndex(next);
+  };
 
   useEffect(() => {
     const el = desktopGridRef.current;
@@ -85,7 +124,7 @@ export default function HowItWorks() {
 
       {/* Mobile: horizontal scroll carousel */}
       <div className="flex md:hidden gap-12 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none px-[calc(50%-128px)] scroll-px-[calc(50%-128px)]">
-        {steps.map((step) => (
+        {steps.map((step, i) => (
           <div
             key={step.number}
             className="flex-none snap-center flex flex-col items-center text-center w-64"
@@ -96,6 +135,7 @@ export default function HowItWorks() {
                 webmSrc={step.webmSrc}
                 alt={step.title}
                 statusBarColor={step.statusBarColor}
+                onOpen={() => openModal(i)}
               />
             </div>
             <div className="flex items-center gap-3 mb-1">
@@ -144,6 +184,7 @@ export default function HowItWorks() {
                     startAt={step.startAt}
                     playCount={step.playCount}
                     cornerRadius={34}
+                    onOpen={() => openModal(i)}
                   />
                 </div>
                 <div className="flex items-center gap-3 mb-1">
@@ -170,6 +211,110 @@ export default function HowItWorks() {
           })}
         </motion.div>
       </Container>
+
+      {mounted && modalIndex !== null &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/97 overflow-hidden"
+            onClick={() => setModalIndex(null)}
+          >
+            {/* Prev arrow (desktop) */}
+            {modalIndex > 0 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goTo(modalIndex - 1);
+                }}
+                className="hidden sm:flex absolute left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white items-center justify-center text-3xl leading-none"
+                aria-label="Previous phone"
+              >
+                ‹
+              </button>
+            )}
+            {/* Next arrow (desktop) */}
+            {modalIndex < steps.length - 1 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goTo(modalIndex + 1);
+                }}
+                className="hidden sm:flex absolute right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white items-center justify-center text-3xl leading-none"
+                aria-label="Next phone"
+              >
+                ›
+              </button>
+            )}
+
+            {/* Swipeable phone */}
+            <AnimatePresence mode="wait" initial={false} custom={modalDirection}>
+              <motion.div
+                key={modalIndex}
+                custom={modalDirection}
+                variants={{
+                  enter: (dir: number) => ({
+                    x: dir > 0 ? 400 : dir < 0 ? -400 : 0,
+                    opacity: dir === 0 ? 1 : 0,
+                  }),
+                  center: { x: 0, opacity: 1 },
+                  exit: (dir: number) => ({
+                    x: dir > 0 ? -400 : 400,
+                    opacity: 0,
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.28, ease: "easeOut" }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.25}
+                onDragEnd={(_, info) => {
+                  const threshold = 80;
+                  if (info.offset.x > threshold && modalIndex > 0) {
+                    goTo(modalIndex - 1);
+                  } else if (
+                    info.offset.x < -threshold &&
+                    modalIndex < steps.length - 1
+                  ) {
+                    goTo(modalIndex + 1);
+                  }
+                }}
+                className="relative h-[88vh] touch-pan-y cursor-grab active:cursor-grabbing"
+                style={{ aspectRatio: "9 / 19.5" }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <PhoneShell
+                  src={steps[modalIndex].image}
+                  alt={steps[modalIndex].title}
+                  webmSrc={steps[modalIndex].webmSrc}
+                  statusBarColor={steps[modalIndex].statusBarColor}
+                  isModal
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Dots */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {steps.map((s, i) => (
+                <button
+                  key={s.number}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (i !== modalIndex) goTo(i);
+                  }}
+                  className={`h-2 rounded-full transition-all ${
+                    i === modalIndex ? "w-6 bg-white" : "w-2 bg-white/40"
+                  }`}
+                  aria-label={`Go to ${s.title}`}
+                />
+              ))}
+            </div>
+          </div>,
+          document.body,
+        )}
     </SectionWrapper>
   );
 }
