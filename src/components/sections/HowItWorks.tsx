@@ -33,8 +33,8 @@ const steps = [
     title: "Improve",
     description:
       "Practice with a pro in your back pocket. Get instant feedback on every swing and see your scores improve!",
-    image: "/videos/swing-video-2.mp4",
-    webmSrc: "/videos/swing-video-2.webm",
+    image: "/videos/swing-video-3.mp4",
+    webmSrc: "/videos/swing-video-3.webm",
     statusBarColor: "black" as const,
   },
 ];
