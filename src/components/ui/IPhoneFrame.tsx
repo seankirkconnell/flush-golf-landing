@@ -218,12 +218,12 @@ export function PhoneShell({
           {/* Status bar */}
           <div
             className={`absolute left-0 right-0 top-0 ${statusBarColor === "black" ? "bg-black" : "bg-white"}`}
-            style={{ height: "5%" }}
+            style={{ height: "calc(5% + 1px)" }}
           />
           {/* Screenshot / Video */}
           <div
             className="absolute"
-            style={{ top: "5%", bottom: 0, left: 0, right: 0 }}
+            style={{ top: "5%", bottom: -1, left: 0, right: 0 }}
           >
             {webmSrc ? (
               <AutoPlayVideo
