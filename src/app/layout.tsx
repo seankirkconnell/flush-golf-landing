@@ -15,7 +15,7 @@ const instrumentSans = Instrument_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://flush-golf-landing.vercel.app"),
-  title: "FLUSH Golf — AI-Powered Swing Analysis",
+  title: "FLUSH Golf — Instant Feedback, Every Swing",
   description:
     "Detect 25+ swing flaws in real-time using just your phone. Get a personalized practice plan and watch your game improve.",
   keywords: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     "swing detection",
   ],
   openGraph: {
-    title: "FLUSH Golf — AI-Powered Swing Analysis",
+    title: "FLUSH Golf — Instant Feedback, Every Swing",
     description:
       "Detect 25+ swing flaws in real-time using just your phone. Get a personalized practice plan and watch your game improve.",
     type: "website",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FLUSH Golf — AI-Powered Swing Analysis",
+    title: "FLUSH Golf — Instant Feedback, Every Swing",
     description:
       "Detect 25+ swing flaws in real-time using just your phone.",
   },

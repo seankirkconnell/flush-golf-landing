@@ -32,7 +32,7 @@ export default function Hero() {
             <motion.div variants={fadeInUp} className="hidden sm:block">
               <Badge>
                 <Sparkles className="w-3.5 h-3.5" />
-                AI-Powered Swing Analysis
+                Instant Feedback, Every Swing
               </Badge>
             </motion.div>
 
