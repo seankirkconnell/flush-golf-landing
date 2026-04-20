@@ -81,7 +81,7 @@ export default function FAQContent() {
                             }}
                             className="overflow-hidden"
                           >
-                            <p className="px-5 sm:px-6 pb-5 sm:pb-6 -mt-1 text-sm sm:text-base text-muted leading-relaxed">
+                            <p className="px-5 sm:px-6 pt-3 pb-5 sm:pb-6 text-sm sm:text-base text-muted leading-relaxed italic">
                               {item.a}
                             </p>
                           </motion.div>
