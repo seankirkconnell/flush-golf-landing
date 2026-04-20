@@ -21,6 +21,13 @@ export default function Footer() {
 
           <div className="flex items-center gap-6 text-sm text-white/40">
             <a
+              href="/faq"
+              className="hover:text-white/70 transition-colors"
+            >
+              FAQ
+            </a>
+            <span>•</span>
+            <a
               href="mailto:sean.kirkconnell@gmail.com"
               className="hover:text-white/70 transition-colors"
             >
