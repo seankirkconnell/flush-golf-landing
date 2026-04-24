@@ -14,7 +14,7 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://flush-golf-landing.vercel.app"),
+  metadataBase: new URL("https://get.flushgolf.app"),
   title: "FLUSH Golf — Instant Feedback, Every Swing",
   description:
     "Detect 25+ swing flaws in real-time using just your phone. Get a personalized practice plan and watch your game improve.",

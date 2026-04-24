@@ -1,4 +1,4 @@
-export const APP_URL = "https://flush-golf.vercel.app";
+export const APP_URL = "https://flushgolf.app";
 
 export const FLAW_GROUPS = [
   {
