@@ -54,7 +54,7 @@ export default function Hero() {
 
             {/* Phone — mobile only, after subtitle */}
             <motion.div variants={fadeInUp} className="mt-5 flex justify-center lg:hidden">
-              <div className="w-52">
+              <div className="w-65">
                 <IPhoneFrame
                   src="/videos/fd-video.mp4"
                   webmSrc="/videos/fd-video.webm"
