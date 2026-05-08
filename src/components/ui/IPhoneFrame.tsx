@@ -70,9 +70,16 @@ function AutoPlayVideo({
     }
 
     let isVisible = false;
+    let seekedOnce = false;
 
     const tryPlay = () => {
       if (isVisible && video.readyState >= 3 && video.paused) {
+        if (!seekedOnce && startAt !== undefined) {
+          try {
+            video.currentTime = startAt;
+          } catch {}
+          seekedOnce = true;
+        }
         video.play().catch(() => {});
       }
     };

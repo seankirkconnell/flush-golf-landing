@@ -61,6 +61,7 @@ export default function Hero() {
                   alt="FLUSH Golf Full Diagnostic showing detected swing flaws"
                   videoTop="4.5%"
                   videoBottom="2%"
+                  startAt={1}
                 />
               </div>
             </motion.div>
@@ -101,6 +102,7 @@ export default function Hero() {
                 alt="FLUSH Golf Full Diagnostic showing detected swing flaws"
                 videoTop="4.5%"
                 videoBottom="2%"
+                startAt={1}
               />
             </motion.div>
           </motion.div>
