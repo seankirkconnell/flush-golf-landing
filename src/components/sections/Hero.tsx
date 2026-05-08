@@ -59,6 +59,8 @@ export default function Hero() {
                   src="/videos/fd-video.mp4"
                   webmSrc="/videos/fd-video.webm"
                   alt="FLUSH Golf Full Diagnostic showing detected swing flaws"
+                  videoTop="4.5%"
+                  videoBottom="2%"
                 />
               </div>
             </motion.div>
@@ -97,6 +99,8 @@ export default function Hero() {
                 src="/videos/fd-video.mp4"
                 webmSrc="/videos/fd-video.webm"
                 alt="FLUSH Golf Full Diagnostic showing detected swing flaws"
+                videoTop="4.5%"
+                videoBottom="2%"
               />
             </motion.div>
           </motion.div>

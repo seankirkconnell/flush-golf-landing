@@ -176,6 +176,8 @@ export function PhoneShell({
   startAt,
   playCount,
   cornerRadius = 44,
+  videoTop = "5%",
+  videoBottom = -1,
 }: {
   src: string;
   alt: string;
@@ -188,6 +190,8 @@ export function PhoneShell({
   startAt?: number;
   playCount?: number;
   cornerRadius?: number;
+  videoTop?: string | number;
+  videoBottom?: string | number;
 }) {
   return (
     <div className="relative w-full h-full">
@@ -224,7 +228,7 @@ export function PhoneShell({
           {/* Screenshot / Video */}
           <div
             className="absolute"
-            style={{ top: "5%", bottom: -1, left: 0, right: 0, transform: "translateZ(0)", overflow: "hidden" }}
+            style={{ top: videoTop, bottom: videoBottom, left: 0, right: 0, transform: "translateZ(0)", overflow: "hidden" }}
           >
             {webmSrc ? (
               <AutoPlayVideo
@@ -288,6 +292,8 @@ export default function IPhoneFrame({
   playCount,
   cornerRadius,
   onOpen,
+  videoTop,
+  videoBottom,
 }: {
   src: string;
   alt: string;
@@ -301,6 +307,8 @@ export default function IPhoneFrame({
   playCount?: number;
   cornerRadius?: number;
   onOpen?: () => void;
+  videoTop?: string | number;
+  videoBottom?: string | number;
 }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -342,6 +350,8 @@ export default function IPhoneFrame({
           startAt={startAt}
           playCount={playCount}
           cornerRadius={cornerRadius}
+          videoTop={videoTop}
+          videoBottom={videoBottom}
         />
       </div>
 
