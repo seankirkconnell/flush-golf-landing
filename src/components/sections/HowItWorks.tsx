@@ -136,9 +136,9 @@ export default function HowItWorks() {
                 alt={step.title}
                 statusBarColor={step.statusBarColor}
                 onOpen={() => openModal(i)}
-                videoBottom="2%"
-                videoLeft="1.5%"
-                videoRight="1.5%"
+                videoBottom={step.number === 3 ? undefined : "2%"}
+                videoLeft={step.number === 3 ? undefined : "1.5%"}
+                videoRight={step.number === 3 ? undefined : "1.5%"}
               />
             </div>
             <div className="flex items-center gap-3 mb-1">
