@@ -17,7 +17,8 @@ const steps = [
     image: "/videos/fd-video.mp4",
     webmSrc: "/videos/fd-video.webm",
     statusBarColor: "white" as const,
-    playCount: 2,
+    startAt: 1,
+    endAt: 13,
   },
   {
     number: 2,
@@ -136,6 +137,8 @@ export default function HowItWorks() {
                 alt={step.title}
                 statusBarColor={step.statusBarColor}
                 onOpen={() => openModal(i)}
+                startAt={step.startAt}
+                endAt={step.endAt}
                 videoBottom={step.number === 3 ? undefined : "2%"}
                 videoLeft={step.number === 3 ? undefined : "1.5%"}
                 videoRight={step.number === 3 ? undefined : "1.5%"}
@@ -184,6 +187,8 @@ export default function HowItWorks() {
                     playing={isActive}
                     onEnded={() => handleEnded(i)}
                     playCount={step.playCount}
+                    startAt={step.startAt}
+                    endAt={step.endAt}
                     cornerRadius={34}
                     onOpen={() => openModal(i)}
                   />

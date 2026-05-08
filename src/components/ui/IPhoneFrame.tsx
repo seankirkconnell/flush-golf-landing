@@ -58,7 +58,6 @@ function AutoPlayVideo({
         if (video.readyState === 0) {
           video.load();
         }
-        // Reset the early-end guard and remaining loops each time playback begins
         endedFiredRef.current = false;
         playsRemainingRef.current = playCount;
         seekToStart(video);
@@ -70,22 +69,20 @@ function AutoPlayVideo({
     }
 
     let isVisible = false;
-    let seekedOnce = false;
 
-    const tryPlay = () => {
-      if (isVisible && video.readyState >= 3 && video.paused) {
-        if (!seekedOnce && startAt !== undefined) {
-          try {
-            video.currentTime = startAt;
-          } catch {}
-          seekedOnce = true;
-        }
-        video.play().catch(() => {});
+    const seekAndPlay = () => {
+      if (!isVisible) return;
+      if (video.readyState === 0) {
+        video.load();
       }
+      seekToStart(video);
+      video.play().catch(() => {});
     };
 
     const onCanPlay = () => {
-      tryPlay();
+      if (isVisible && video.paused) {
+        video.play().catch(() => {});
+      }
     };
 
     video.addEventListener("canplay", onCanPlay);
@@ -93,14 +90,11 @@ function AutoPlayVideo({
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
+          const wasVisible = isVisible;
           isVisible = entry.isIntersecting;
-          if (isVisible) {
-            // iOS Safari won't preload video data — kick off loading explicitly
-            if (video.readyState === 0) {
-              video.load();
-            }
-            tryPlay();
-          } else if (!video.paused) {
+          if (isVisible && !wasVisible) {
+            seekAndPlay();
+          } else if (!isVisible && !video.paused) {
             video.pause();
           }
         }
@@ -114,51 +108,70 @@ function AutoPlayVideo({
       observer.disconnect();
       video.removeEventListener("canplay", onCanPlay);
     };
-  }, [manualControl, playing]);
+  }, [manualControl, playing, playCount, startAt]);
 
   useEffect(() => {
-    if (!onEnded) return;
     const video = ref.current;
     if (!video) return;
 
-    const fire = () => {
-      if (endedFiredRef.current) return;
+    const onTimeUpdate = () => {
+      if (endAt === undefined || video.currentTime < endAt) return;
+      if (manualControl) {
+        if (endedFiredRef.current) return;
+        playsRemainingRef.current -= 1;
+        if (playsRemainingRef.current > 0) {
+          try {
+            video.currentTime = startAt ?? 0;
+          } catch {}
+          video.play().catch(() => {});
+        } else {
+          endedFiredRef.current = true;
+          video.pause();
+          onEnded?.();
+        }
+      } else {
+        try {
+          video.currentTime = startAt ?? 0;
+        } catch {}
+      }
+    };
+
+    const onNativeEnded = () => {
+      if (!manualControl || endedFiredRef.current) return;
       playsRemainingRef.current -= 1;
       if (playsRemainingRef.current > 0) {
-        // Replay from startAt (or 0) instead of advancing
         try {
           video.currentTime = startAt ?? 0;
         } catch {}
         video.play().catch(() => {});
-        return;
-      }
-      endedFiredRef.current = true;
-      onEnded();
-    };
-
-    const onNativeEnded = () => fire();
-    const onTimeUpdate = () => {
-      if (endAt !== undefined && video.currentTime >= endAt) {
-        video.pause();
-        fire();
+      } else {
+        endedFiredRef.current = true;
+        onEnded?.();
       }
     };
 
-    video.addEventListener("ended", onNativeEnded);
     if (endAt !== undefined) {
       video.addEventListener("timeupdate", onTimeUpdate);
     }
+    video.addEventListener("ended", onNativeEnded);
+
     return () => {
-      video.removeEventListener("ended", onNativeEnded);
       video.removeEventListener("timeupdate", onTimeUpdate);
+      video.removeEventListener("ended", onNativeEnded);
     };
-  }, [onEnded, endAt, startAt]);
+  }, [manualControl, endAt, startAt, onEnded]);
+
+  // When startAt is set, we control initial playback ourselves via the
+  // observer (or playing prop) so the browser doesn't sneak in a play-from-0.
+  // When endAt is set, we handle looping manually so loop=false.
+  const useNativeAutoplay = !manualControl && startAt === undefined;
+  const useNativeLoop = !manualControl && endAt === undefined;
 
   return (
     <video
       ref={ref}
-      autoPlay={!manualControl}
-      loop={!manualControl}
+      autoPlay={useNativeAutoplay}
+      loop={useNativeLoop}
       muted
       playsInline
       preload="auto"
