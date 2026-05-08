@@ -41,7 +41,7 @@ export default function LiveCoachSection() {
             variants={isDesktop ? slideInLeft : fadeInUp}
             className="flex justify-center lg:justify-start order-2 lg:order-1"
           >
-            <div className="w-52 sm:w-60">
+            <div className="w-60 lg:w-68">
               <IPhoneFrame
                 src="/videos/swing-video-3.mp4"
                 webmSrc="/videos/swing-video-3.webm"
@@ -75,11 +75,11 @@ export default function LiveCoachSection() {
             </motion.p>
 
             <div className="mt-4 sm:mt-8 space-y-3 sm:space-y-5">
-              {features.map((feature) => (
+              {features.map((feature, index) => (
                 <motion.div
                   key={feature.title}
                   variants={fadeInUp}
-                  className={`${feature.title === "Session tracking" ? "hidden sm:flex" : "flex"} gap-3 sm:gap-4`}
+                  className={`${index === 0 ? "flex" : "hidden sm:flex"} gap-3 sm:gap-4`}
                 >
                   <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sage-light flex items-center justify-center">
                     <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-forest" />
