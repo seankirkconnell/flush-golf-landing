@@ -156,6 +156,7 @@ function AutoPlayVideo({
       playsInline
       preload="auto"
       className={className}
+      style={{ borderRadius: 1 }}
     >
       <source src={mp4Src} type="video/mp4" />
       <source src={webmSrc} type="video/webm" />
@@ -223,7 +224,7 @@ export function PhoneShell({
           {/* Screenshot / Video */}
           <div
             className="absolute"
-            style={{ top: "5%", bottom: -1, left: 0, right: 0 }}
+            style={{ top: "5%", bottom: -1, left: 0, right: 0, transform: "translateZ(0)", overflow: "hidden" }}
           >
             {webmSrc ? (
               <AutoPlayVideo
